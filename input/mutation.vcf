@@ -1,0 +1,4 @@
+##fileformat=VCFv4.2
+##contig=<ID=chr5,length=181538259>
+#CHROM	POS	ID	REF	ALT	QUAL	FILTER	INFO	FORMAT	SAMPLE
+chr5	171410539	.	C	CTCTG	.	.	.	.	.

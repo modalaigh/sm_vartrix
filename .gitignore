@@ -1,0 +1,9 @@
+# Ignore large files and logs
+filtered_bams/*
+input/human_GRCh38_no_alt_analysis_set*
+input/*mapped.bam*
+input/*barcodes*
+logs/*
+vartrix/*
+output/*
+.snakemake/*

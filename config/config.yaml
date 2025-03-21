@@ -1,0 +1,2 @@
+filter_region: chr5:171410527-171410552 # Defines region to subset BAM on. This region ensures that reads are subset to same size and that they don't span exon boundries
+reference_genome: input/human_GRCh38_no_alt_analysis_set.fasta # Please provide the path to the reference genome
