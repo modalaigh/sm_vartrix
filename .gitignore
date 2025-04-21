@@ -1,5 +1,8 @@
 # Ignore large files and logs
 filtered_bams/*
+leftaligned_bams/*
+output_kinnex/*
+scripts/mv_tenx_data.sh
 input/human_GRCh38_no_alt_analysis_set*
 input/*mapped.bam*
 input/*barcodes*

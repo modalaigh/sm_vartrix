@@ -12,11 +12,37 @@ rule filter:
     shell: 
         "samtools view -b -h -o {output} {input} {params.region} 2> {log}"
 
-rule index:
+rule index_1:
     input:
         "filtered_bams/{sample}_scisoseq.mapped_filtered.bam"
     output:
         "filtered_bams/{sample}_scisoseq.mapped_filtered.bam.bai"
+    shell:
+        "samtools index {input}"
+
+rule left_align:
+    input:
+        inbam="filtered_bams/{sample}_scisoseq.mapped_filtered.bam",
+        genome=config['reference_genome']
+    output:
+        outbam="leftaligned_bams/{sample}_scisoseq.mapped_leftaligned.bam"
+    log:
+        "logs/left_align/{sample}.log"
+    shell:
+        """
+        gatk LeftAlignIndels \
+          -R {input.genome} \
+          -I {input.inbam} \
+          -O {output.outbam} \
+          --disable-tool-default-read-filters \
+          2> {log}
+        """
+
+rule index_2:
+    input:
+        "leftaligned_bams/{sample}_scisoseq.mapped_leftaligned.bam"
+    output:
+        "leftaligned_bams/{sample}_scisoseq.mapped_leftaligned.bam.bai"
     shell:
         "samtools index {input}"
 
@@ -26,13 +52,13 @@ rule trim:
     output:
         "input/{sample}_barcodes_trimmed.tsv"
     shell:
-        "sed 's/-1$//' {input} > {output}"
+        "sed 's/-1$/-1/' {input} > {output}"
 
 rule vartrix:
     input: 
         barcodes="input/{sample}_barcodes_trimmed.tsv",
-        filtered_bams="filtered_bams/{sample}_scisoseq.mapped_filtered.bam",
-        filtered_bams_index="filtered_bams/{sample}_scisoseq.mapped_filtered.bam.bai",
+        filtered_bams="leftaligned_bams/{sample}_scisoseq.mapped_leftaligned.bam",
+        filtered_bams_index="leftaligned_bams/{sample}_scisoseq.mapped_leftaligned.bam.bai",
         vcf="input/mutation.vcf",
         genome=config['reference_genome'] # Downloaded from PacBio GitHub repository with download_pb_hg38.sh
     output: 

@@ -9,7 +9,8 @@ sample_name <- snakemake@wildcards[[1]]
 results <- snakemake@output[[1]]
 
 # Recode the vartrix results into a useful format
-vartrix$barcode <- paste0(barcodes$V1, "-1")
+#vartrix$barcode <- paste0(barcodes$V1, "-1")
+vartrix$barcode <- barcodes$V1
 
 df <- vartrix %>% mutate(status = case_when(
   V1 %in% c(0, 1) ~ "non-mutant",
