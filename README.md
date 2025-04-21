@@ -5,7 +5,7 @@ Please be aware that due to the technical limitations of scRNA-seq data, a `non-
 
 ### Set up conda environment
 ```
-conda create -n sm_vartrix -c bioconda snakemake vartrix samtools conda-forge::r-essentials
+conda create -n sm_vartrix -c bioconda snakemake vartrix samtools conda-forge::r-essentials bioconda::gatk4
 ```
 
 ### Required inputs
