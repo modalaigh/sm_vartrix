@@ -13,7 +13,8 @@ results <- snakemake@output[[1]]
 vartrix$barcode <- barcodes$V1
 
 df <- vartrix %>% mutate(status = case_when(
-  V1 %in% c(0, 1) ~ "non-mutant",
+  V1 %in% c(0) ~ "no_coverage",
+  V1 %in% c(1) ~ "non-mutant",
   V1 %in% c(2, 3) ~ "mutant"
 )) %>%
   select(barcode, status) %>%

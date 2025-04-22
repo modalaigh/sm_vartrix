@@ -23,6 +23,7 @@ rule index_1:
 rule left_align:
     input:
         inbam="filtered_bams/{sample}_scisoseq.mapped_filtered.bam",
+        inbai="filtered_bams/{sample}_scisoseq.mapped_filtered.bam.bai",
         genome=config['reference_genome']
     output:
         outbam="leftaligned_bams/{sample}_scisoseq.mapped_leftaligned.bam"
@@ -73,7 +74,7 @@ rule vartrix:
           -f {input.genome} \
           -c {input.barcodes} \
           -o {output} \
-          2> {log}
+          &> {log}
         """
 
 rule annotate:
