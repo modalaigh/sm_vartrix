@@ -68,13 +68,24 @@ rule vartrix:
         "logs/vartrix/{sample}.log"
     shell: 
         """
-        vartrix \
-          -v {input.vcf} \
-          -b {input.filtered_bams} \
-          -f {input.genome} \
-          -c {input.barcodes} \
-          -o {output} \
-          &> {log}
+        if [[ "{wildcards.sample}" == *10x* ]]; then
+            vartrix \
+              -v {input.vcf} \
+              -b {input.filtered_bams} \
+              -f {input.genome} \
+              -c {input.barcodes} \
+              -o {output} \
+              --umi \
+              &> {log}
+        else
+            vartrix \
+              -v {input.vcf} \
+              -b {input.filtered_bams} \
+              -f {input.genome} \
+              -c {input.barcodes} \
+              -o {output} \
+              &> {log}
+        fi
         """
 
 rule annotate:
